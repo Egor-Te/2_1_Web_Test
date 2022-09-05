@@ -71,7 +71,7 @@ public class CardTest {
     @Test
     void shouldNotEmptyName() {
         driver.get("http://localhost:9999/");
-        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("");
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("456");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79644000000");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.cssSelector("div button")).click();
