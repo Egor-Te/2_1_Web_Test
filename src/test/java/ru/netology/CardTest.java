@@ -18,9 +18,7 @@ public class CardTest {
 
     @BeforeAll
     static void setUpAll() {
-        //System.setProperty("webdriver.chrome.driver", "C:\\Users\\facke\\IdeaProjects\\AQA_2_1_WEB\\driver\\chromedriver.exe");
         WebDriverManager.chromedriver().setup();
-        //ChromeDriverManager.getInstance().setup();
         WebDriverManager.getInstance().setup();
 
 
@@ -34,7 +32,7 @@ public class CardTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
-        // driver.get("http://localhost:9999/");
+        driver.get("http://localhost:9999/");
     }
 
     @AfterEach
@@ -45,7 +43,6 @@ public class CardTest {
 
     @Test
     void shouldTest() {
-        driver.get("http://localhost:9999/");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Егор Темин");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79644000000");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -57,7 +54,6 @@ public class CardTest {
 
     @Test
     void shouldNameWithHyphen() {
-        driver.get("http://localhost:9999/");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Анна-Мария Картер");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79644000000");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -69,7 +65,6 @@ public class CardTest {
 
     @Test
     void shouldNotEmptyName() {
-        driver.get("http://localhost:9999/");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79644000000");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -81,7 +76,6 @@ public class CardTest {
 
     @Test
     void shouldNotEmptyPhone() {
-        driver.get("http://localhost:9999/");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Егор Темин");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -93,7 +87,6 @@ public class CardTest {
 
     @Test
     void shouldNotInvalidSymbolsInName() {
-        driver.get("http://localhost:9999/");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Name");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79644000000");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -105,7 +98,6 @@ public class CardTest {
 
     @Test
     void shouldNotNotCompletePhone() {
-        driver.get("http://localhost:9999/");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Егор Темин");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79644");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -114,5 +106,17 @@ public class CardTest {
         String actual = driver.findElement(By.cssSelector("span.input_invalid[data-test-id='phone'] .input__sub")).getText().trim();
         assertEquals(expected, actual);
     }
+
+    @Test
+    void shouldNotPassedByCheckBox() {
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Егор Темин");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79644000000");
+        driver.findElement(By.cssSelector("div button")).click();
+
+        Boolean actual = driver.findElement(By.cssSelector(".input_invalid[data-test-id='agreement']")).isEnabled();
+
+        assertEquals(true, actual);
+    }
+
 
 }
